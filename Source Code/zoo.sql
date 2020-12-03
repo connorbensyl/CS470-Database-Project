@@ -16,7 +16,6 @@ birth_date date
 create table habitat (
 habitat_number int PRIMARY KEY,
 habitat_name varchar(30) NOT NULL,
-location  varchar(30) NOT NULL,
 super_id int not null,
 constraint fk_super_id_emp_id foreign key (super_id) references employee (emp_id)
 );
@@ -29,21 +28,21 @@ constraint fk_hno_habitat_number foreign key (hno) references habitat (habitat_n
 );
 
 create table species (
-sname char PRIMARY KEY,
-category char,
-diet char,
+sname varchar(20) PRIMARY KEY,
+category varchar(15),
+diet varchar(10),
 hno int NOT NULL,
 constraint fk_hno_hanitat_number foreign key (hno) references habitat (habitat_number)
 );
 
 create table animal (
 animal_id int PRIMARY KEY,
-aname varchar(30) NOT NULL,
-sex char,
-age char,
-acqui_way char,
-health_cond char,
-specie char not null,
+aname varchar(10) NOT NULL,
+sex char(1),
+age int,
+acqui_way varchar(20),
+health_cond varchar(5),
+specie varchar(10) not null,
 constraint fk_specie_sname foreign key (specie) references species (sname)
 );
 
