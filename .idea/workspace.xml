@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f285fe56-e41a-496c-92ce-0184e53daff3" name="Default Changelist" comment="" />
+    <list default="true" id="d84b3614-0cc1-4f9c-90a8-0851d295e1f4" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1l4higOC1YazUN2gQgkL4iPHWc5" />
+  <component name="ProjectId" id="1l4hvfKDDmDOWmBHruu2us6INzw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -21,11 +28,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f285fe56-e41a-496c-92ce-0184e53daff3" name="Default Changelist" comment="" />
-      <created>1606862399513</created>
+      <changelist id="d84b3614-0cc1-4f9c-90a8-0851d295e1f4" name="Default Changelist" comment="" />
+      <created>1606862502627</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1606862399513</updated>
+      <updated>1606862502627</updated>
     </task>
     <servers />
   </component>
