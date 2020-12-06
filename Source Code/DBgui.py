@@ -20,10 +20,10 @@ def logintodb(user, passw):
     # If paswword is enetered by the
     # user
     if passw:
-        db = mysql.connector.connect(host="localhost",
+        db = mysql.connector.connect(host="kc-sce-appdb01",
                                      user=user,
                                      password=passw,
-                                     db="zoo")
+                                     db="cjbdxd")
         cursor = db.cursor()
 
         # If no password is enetered by the
