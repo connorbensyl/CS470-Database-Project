@@ -5,15 +5,10 @@ import os
 import tkinter as tk
 import mysql.connector
 from tkinter import *
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
 from tkinter import ttk
 import PIL
 
-=======
->>>>>>> ee39083b8573814fd9c3f25c3b085f19a0b29aa4
->>>>>>> Stashed changes
 
 def submitact():
     user = Username.get()
