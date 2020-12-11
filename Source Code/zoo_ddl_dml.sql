@@ -308,4 +308,3 @@ INSERT INTO cares_for(emp_id, ani_id) VALUES
 (50, 22);
 
 
-

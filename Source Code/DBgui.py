@@ -1,93 +1,65 @@
 import tkinter as tk
 import mysql.connector
-import hashlib
-import os
-import tkinter as tk
-import mysql.connector
 from tkinter import *
-
-def submitact():
-    user = Username.get()
-    passw = password.get()
-    logintodb(user, passw)
-    salt = os.urandom(32)
-    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, dklen=128)
+from tkinter import ttk
 
 
-def logintodb(user, passw):
-    # If paswword is entered by the
-    # user
-    if passw:
-        db = mysql.connector.connect(host="localhost",
-                                     user=user,
-                                     password=passw,
-                                     db="zoo")
-        cursor = db.cursor()
-
-        # If no password is entered by the
-    # user
-    else:
-        db = mysql.connector.connect(host="localhost",
-                                     user=user,
-                                     db="zoo")
-        cursor = db.cursor()
-    cursor = db.cursor()
-    button_screen = tk.Toplevel()
-    button_screen.title = "Select which table you would like to view"
-    animal_btn = tk.Button(button_screen, text="animals", width=200, length=200, bg='white',
-                           command=animal_query(cursor))
-    animal_btn.pack()
-    employee_btn = tk.Button(button_screen, text="employees", width=200, length=200, bg='white',
-                             command=employee_query(cursor))
-    employee_btn.pack()
-    supervisor_btn = tk.Button(button_screen, text="employees", width=200, length=200, bg='white',
-                               command=supervisor_query(cursor))
-    supervisor_btn.pack()
-
-
-def animal_query(cursor):
+def animal_query(the_cursor):
     anim_query = "SELECT * FROM animal"
     cursor.execute(anim_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
-    query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    query_screen.title("Query results")
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "animal id", "name", "sex", "age", "how the zoo acquired them", "health conditions", "species no")
+
+    tree.column("animal id", width=100)
+    tree.column("name", width=100)
+    tree.column("sex", width=100)
+    tree.column("age", width=100)
+    tree.column("how the zoo acquired them", width=100)
+    tree.column("health conditions", width=100)
+    tree.column("species no", width=100)
+    query_screen.mainloop()
 
 
-def employee_query(cursor):
+def employee_query(the_cursor):
     emp_query = "SELECT * FROM employee"
     cursor.execute(emp_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
-    query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    query_screen.title("Query results")
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "employee id", "first name", "last name", "salary", "sex", "date of birth")
+
+    tree.column("employee id", width=100)
+    tree.column("first name", width=100)
+    tree.column("last name", width=100)
+    tree.column("salary", width=100)
+    tree.column("sex", width=100)
+    tree.column("date of birth", width=100)
+    query_screen.mainloop()
 
 
-def supervisor_query(cursor):
+def supervisor_query(the_cursor):
     emp_query = "SELECT * FROM employee WHERE super_id IN(SELECT emp_id FROM employee)"
     cursor.execute(emp_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
     query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "employee id", "first name", "last name", "salary", "sex", "date of birth")
+
+    tree.column("employee id", width=100)
+    tree.column("first name", width=100)
+    tree.column("last name", width=100)
+    tree.column("salary", width=100)
+    tree.column("sex", width=100)
+    tree.column("date of birth", width=100)
+    query_screen.mainloop()
 
 
 root = tk.Tk()
@@ -96,21 +68,30 @@ root.title("DBMS Login Page")
 
 C = Canvas(root, bg="blue", height=250, width=300)
 
-# Definging the first row
-lblfrstrow = tk.Label(root, text="Username -", )
-lblfrstrow.place(x=50, y=20)
+db = mysql.connector.connect(host="localhost",
+                             user='root',
+                             db="zoo")
 
-Username = tk.Entry(root, width=35)
-Username.place(x=150, y=20, width=100)
+cursor = db.cursor()
 
-lblsecrow = tk.Label(root, text="Password -")
-lblsecrow.place(x=50, y=50)
+# test to show that the database is returning the tables
+# savequery = "SELECT * from animal"
+# cursor.execute(savequery)
+# myresult = cursor.fetchall()
+# for x in myresult:
+#     print(x)
+root.title("Select which table you would like to view")
+animal_btn = tk.Button(root, text="animals", width=200, length=200, bg='white',
+                       command=animal_query(cursor))
 
-password = tk.Entry(root, width=35)
-password.place(x=150, y=50, width=100)
+employee_btn = tk.Button(root, text="employees", width=200, length=200, bg='white',
+                         command=employee_query(cursor))
 
-submitbtn = tk.Button(root, text="Login",
-                      bg='blue', command=submitact)
-submitbtn.place(x=150, y=135, width=55)
+supervisor_btn = tk.Button(root, text="employees", width=200, length=200, bg='white',
+                           command=supervisor_query(cursor))
+
+animal_btn.place(x=150, y=235, width=50)
+employee_btn.place(x=150, y=135, width=50)
+supervisor_btn.place(x=150, y=35, width=50)
 
 root.mainloop()
