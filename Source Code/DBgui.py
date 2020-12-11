@@ -5,6 +5,15 @@ import os
 import tkinter as tk
 import mysql.connector
 from tkinter import *
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+from tkinter import ttk
+import PIL
+
+=======
+>>>>>>> ee39083b8573814fd9c3f25c3b085f19a0b29aa4
+>>>>>>> Stashed changes
 
 def submitact():
     user = Username.get()
@@ -33,7 +42,7 @@ def logintodb(user, passw):
         cursor = db.cursor()
     cursor = db.cursor()
     button_screen = tk.Toplevel()
-    button_screen.title = "Select which table you would like to view"
+    button_screen.title("Select which table you would like to view")
     animal_btn = tk.Button(button_screen, text="animals", width=200, length=200, bg='white',
                            command=animal_query(cursor))
     animal_btn.pack()
@@ -43,6 +52,7 @@ def logintodb(user, passw):
     supervisor_btn = tk.Button(button_screen, text="employees", width=200, length=200, bg='white',
                                command=supervisor_query(cursor))
     supervisor_btn.pack()
+    button_screen.mainloop()
 
 
 def animal_query(cursor):
@@ -50,14 +60,19 @@ def animal_query(cursor):
     cursor.execute(anim_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
-    query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    query_screen.title("Query results")
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "animal id", "name", "sex", "age", "how the zoo acquired them", "health conditions", "species no")
+
+    tree.column("animal_id", width=100)
+    tree.column("name", width=100)
+    tree.column("sex", width=100)
+    tree.column("age", width=100)
+    tree.column("how the zoo acquired them", width=100)
+    tree.column("health conditions", width=100)
+    tree.column("species_no", width=100)
+    query_screen.mainloop()
 
 
 def employee_query(cursor):
@@ -65,14 +80,18 @@ def employee_query(cursor):
     cursor.execute(emp_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
-    query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    query_screen.title("Query results")
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "employee id", "first name", "last name", "salary", "sex", "date of birth")
+
+    tree.column("employee id", width=100)
+    tree.column("first name", width=100)
+    tree.column("last name", width=100)
+    tree.column("salary", width=100)
+    tree.column("sex", width=100)
+    tree.column("date of birth", width=100)
+    query_screen.mainloop()
 
 
 def supervisor_query(cursor):
@@ -80,14 +99,23 @@ def supervisor_query(cursor):
     cursor.execute(emp_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
+    query_screen.title("Query results")
+    emp_query = "SELECT * FROM employee"
+    cursor.execute(emp_query)
+    the_result = cursor.fetchall()
+    query_screen = tk.Toplevel()
     query_screen.title = "Query results"
-    i = 0
-    for row in the_result:
-        for column in range(len(row)):
-            e = tk.Entry(top, width=10, fg='blue')
-            e.grid(row=i, column=column)
-            e.insert(END, row[column])
-        i += 1
+    tree = ttk.Treeview(query_screen)
+    tree["columns"] = (
+        "employee id", "first name", "last name", "salary", "sex", "date of birth")
+
+    tree.column("employee id", width=100)
+    tree.column("first name", width=100)
+    tree.column("last name", width=100)
+    tree.column("salary", width=100)
+    tree.column("sex", width=100)
+    tree.column("date of birth", width=100)
+    query_screen.mainloop()
 
 
 root = tk.Tk()
