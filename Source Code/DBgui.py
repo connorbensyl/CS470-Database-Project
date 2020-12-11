@@ -5,8 +5,6 @@ import os
 import tkinter as tk
 import mysql.connector
 from tkinter import *
-import PIL
-
 
 def submitact():
     user = Username.get()
