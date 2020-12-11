@@ -1,6 +1,7 @@
 import tkinter as tk
 import mysql.connector
-
+import hashlib
+import os
 import tkinter as tk
 import mysql.connector
 from tkinter import *
@@ -11,53 +12,84 @@ def submitact():
     user = Username.get()
     passw = password.get()
     logintodb(user, passw)
-    print(f"The name entered by you is {user} {passw}")
+    salt = os.urandom(32)
+    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, dklen=128)
 
 
 def logintodb(user, passw):
     # If paswword is entered by the
     # user
     if passw:
-        db = mysql.connector.connect(host="kc-sce-appdb01",
+        db = mysql.connector.connect(host="localhost",
                                      user=user,
                                      password=passw,
-                                     db="cjbdxd")
+                                     db="zoo")
         cursor = db.cursor()
 
-        # If no password is enetered by the
+        # If no password is entered by the
     # user
     else:
-        db = mysql.connector.connect(host="kc-sce-appdb01",
+        db = mysql.connector.connect(host="localhost",
                                      user=user,
-                                     db="cjbdxd")
+                                     db="zoo")
         cursor = db.cursor()
+    cursor = db.cursor()
+    button_screen = tk.Toplevel()
+    button_screen.title = "Select which table you would like to view"
+    animal_btn = tk.Button(button_screen, text="animals", width=200, length=200, bg='white',
+                           command=animal_query(cursor))
+    animal_btn.pack()
+    employee_btn = tk.Button(button_screen, text="employees", width=200, length=200, bg='white',
+                             command=employee_query(cursor))
+    employee_btn.pack()
+    supervisor_btn = tk.Button(button_screen, text="employees", width=200, length=200, bg='white',
+                               command=supervisor_query(cursor))
+    supervisor_btn.pack()
 
-    #     # A Table in the database
-    # savequery = "select * from ANIMAL"
-    #
-    # try:
-    #     cursor.execute(savequery)
-    #     myresult = cursor.fetchall()
-    #
-    #     # Printing the result of the
-    #     # query
-    #     for x in myresult:
-    #         print(x)
-    #     print("Query Excecuted successfully")
-    #
-    # except:
-    #     db.rollback()
-    #     print("Error occured")
 
-    animal_query = "SELECT * FROM animal"
-    employee_query = "SELECT * FROM employee"
-    supervisor_query = "SELECT * FROM employee WHERE super_id IN(SELECT habitat_number FROM habitat)"
-    animal_btn = tk.Button(root, text="animals", width=200, length=200, bg='white',
-                           command=cursor.execute(animal_query))
-    employee_btn = tk.Button(root, text="employees", width=200, length=200, bg='white',
-                             command=cursor.execute(employee_query))
-    supervisor_btn = tk.Button(root, text="employees", width=200, length=200, bg='white',
-                               command=cursor.execute(supervisor_query))
+def animal_query(cursor):
+    anim_query = "SELECT * FROM animal"
+    cursor.execute(anim_query)
+    the_result = cursor.fetchall()
+    query_screen = tk.Toplevel()
+    query_screen.title = "Query results"
+    i = 0
+    for row in the_result:
+        for column in range(len(row)):
+            e = tk.Entry(top, width=10, fg='blue')
+            e.grid(row=i, column=column)
+            e.insert(END, row[column])
+        i += 1
+
+
+def employee_query(cursor):
+    emp_query = "SELECT * FROM employee"
+    cursor.execute(emp_query)
+    the_result = cursor.fetchall()
+    query_screen = tk.Toplevel()
+    query_screen.title = "Query results"
+    i = 0
+    for row in the_result:
+        for column in range(len(row)):
+            e = tk.Entry(top, width=10, fg='blue')
+            e.grid(row=i, column=column)
+            e.insert(END, row[column])
+        i += 1
+
+
+def supervisor_query(cursor):
+    emp_query = "SELECT * FROM employee WHERE super_id IN(SELECT emp_id FROM employee)"
+    cursor.execute(emp_query)
+    the_result = cursor.fetchall()
+    query_screen = tk.Toplevel()
+    query_screen.title = "Query results"
+    i = 0
+    for row in the_result:
+        for column in range(len(row)):
+            e = tk.Entry(top, width=10, fg='blue')
+            e.grid(row=i, column=column)
+            e.insert(END, row[column])
+        i += 1
 
 
 root = tk.Tk()

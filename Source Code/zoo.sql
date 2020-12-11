@@ -54,8 +54,22 @@ constraint fk_ani_id_animal_id foreign key (ani_id) references animal (animal_id
 );
 
 
+INSERT INTO animal(animal_id, aname, sex, age, acqui_way, health_cond, specie) VALUES
+(1, 'Harambe', 'M', 17, 'born in zoo', NULL, 'Gorilla');
 
+INSERT INTO species(sname, category, diet, hno) VALUES
+('Gorilla', 'Primate', 'Herbivore', 1);
 
+INSERT INTO habitat(habitat_number, habitat_name, super_id) VALUES
+(1, 'Jungle', 1);
 
+INSERT INTO employee(emp_id, first_name, last_name, salary, sex, birth_date) VALUES
+(1, 'John', 'Smith', 50,000, 'M', '01/01/2001');
+
+INSERT INTO works_in(emp_id, hno) VALUES
+(1, 1);
+
+INSERT INTO cares_for(emp_id, ani_id) VALUES
+(1, 1);
 
 
