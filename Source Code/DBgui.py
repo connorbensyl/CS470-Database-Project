@@ -44,7 +44,7 @@ def employee_query(the_cursor):
 
 
 def supervisor_query(the_cursor):
-    emp_query = "SELECT * FROM employee WHERE super_id IN(SELECT emp_id FROM employee)"
+    emp_query = "SELECT * FROM employee WHERE emp_id IN(SELECT super_id FROM employee)"
     cursor.execute(emp_query)
     the_result = cursor.fetchall()
     query_screen = tk.Toplevel()
